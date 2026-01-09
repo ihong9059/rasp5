@@ -132,17 +132,25 @@ section h2 {
     margin: 5px 0;
 }
 
-.capture-btn {
-    width: 100%;
+.button-group {
+    display: flex;
+    gap: 10px;
     margin-top: 15px;
+}
+
+.capture-btn, .retry-btn {
+    flex: 1;
     padding: 15px;
-    background: #e94560;
     color: white;
     border: none;
     border-radius: 10px;
     font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.3s;
+}
+
+.capture-btn {
+    background: #e94560;
 }
 
 .capture-btn:hover:not(:disabled) {
@@ -153,6 +161,15 @@ section h2 {
 .capture-btn:disabled {
     background: #444;
     cursor: not-allowed;
+}
+
+.retry-btn {
+    background: #0984e3;
+}
+
+.retry-btn:hover {
+    background: #74b9ff;
+    transform: scale(1.02);
 }
 
 /* Result Section */

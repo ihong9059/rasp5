@@ -33,9 +33,14 @@
                     <p>IP Webcam 앱을 실행하고 IP를 입력하세요</p>
                 </div>
             </div>
-            <button id="capture-btn" class="capture-btn" onclick="captureAndRecognize()" disabled>
-                Capture & Recognize
-            </button>
+            <div class="button-group">
+                <button id="capture-btn" class="capture-btn" onclick="captureAndRecognize()" disabled>
+                    Capture & Recognize
+                </button>
+                <button id="retry-btn" class="retry-btn" onclick="retryCapture()" style="display: none;">
+                    Retry
+                </button>
+            </div>
         </section>
 
         <!-- Recognition Result -->

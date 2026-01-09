@@ -5,12 +5,16 @@ const connectionStatus = document.getElementById('connection-status');
 const videoStream = document.getElementById('video-stream');
 const noVideo = document.getElementById('no-video');
 const captureBtn = document.getElementById('capture-btn');
+const retryBtn = document.getElementById('retry-btn');
 const resultPlaceholder = document.getElementById('result-placeholder');
 const resultContent = document.getElementById('result-content');
 const plateNumber = document.getElementById('plate-number');
 const confidence = document.getElementById('confidence');
 const allTexts = document.getElementById('all-texts');
 const loadingOverlay = document.getElementById('loading-overlay');
+
+// State
+let isCapturing = false;
 
 // Connect to IP Webcam
 async function connectCamera() {
@@ -65,14 +69,34 @@ function showStatus(message, type) {
 // Capture and recognize license plate
 async function captureAndRecognize() {
     captureBtn.disabled = true;
-    loadingOverlay.style.display = 'flex';
+    isCapturing = true;
 
     try {
-        const response = await fetch('/capture', {
+        // Step 1: Freeze frame immediately
+        const freezeResponse = await fetch('/freeze', {
             method: 'POST'
         });
+        const freezeData = await freezeResponse.json();
 
-        const data = await response.json();
+        if (!freezeData.success) {
+            throw new Error(freezeData.error || 'Failed to capture frame');
+        }
+
+        // Immediately show frozen image
+        videoStream.src = '/captures/' + freezeData.filename;
+
+        // Show Retry button, hide Capture button
+        captureBtn.style.display = 'none';
+        retryBtn.style.display = 'inline-block';
+
+        // Show loading overlay for OCR
+        loadingOverlay.style.display = 'flex';
+
+        // Step 2: Recognize license plate
+        const recognizeResponse = await fetch('/recognize/' + freezeData.filename, {
+            method: 'POST'
+        });
+        const data = await recognizeResponse.json();
 
         // Hide placeholder, show result
         resultPlaceholder.style.display = 'none';
@@ -108,10 +132,30 @@ async function captureAndRecognize() {
         plateNumber.className = 'plate-number error';
         confidence.textContent = '';
         allTexts.textContent = '';
+
+        // Show Retry button even on error
+        captureBtn.style.display = 'none';
+        retryBtn.style.display = 'inline-block';
     } finally {
-        captureBtn.disabled = false;
         loadingOverlay.style.display = 'none';
     }
+}
+
+// Retry - resume live stream
+function retryCapture() {
+    isCapturing = false;
+
+    // Resume live stream
+    videoStream.src = '/video_feed';
+
+    // Reset result area
+    resultPlaceholder.style.display = 'block';
+    resultContent.style.display = 'none';
+
+    // Show Capture button, hide Retry button
+    captureBtn.style.display = 'inline-block';
+    captureBtn.disabled = false;
+    retryBtn.style.display = 'none';
 }
 
 // Enter key to connect
