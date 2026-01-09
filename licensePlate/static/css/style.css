@@ -1,0 +1,250 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background-color: #1a1a2e;
+    color: #eaeaea;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    border-radius: 10px;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #e94560;
+}
+
+header p {
+    color: #a0a0a0;
+}
+
+section {
+    background: #16213e;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #e94560;
+    border-bottom: 1px solid #0f3460;
+    padding-bottom: 10px;
+}
+
+/* Camera Setup */
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #0f3460;
+    color: #eaeaea;
+    font-size: 1rem;
+}
+
+.input-group input::placeholder {
+    color: #666;
+}
+
+.input-group button {
+    padding: 12px 25px;
+    background: #e94560;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.input-group button:hover {
+    background: #ff6b6b;
+}
+
+.status {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.status.success {
+    background: rgba(46, 213, 115, 0.2);
+    color: #2ed573;
+}
+
+.status.error {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+}
+
+/* Video Section */
+.video-container {
+    position: relative;
+    width: 100%;
+    background: #0f3460;
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+}
+
+#video-stream {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+.no-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #666;
+}
+
+.no-video p {
+    margin: 5px 0;
+}
+
+.capture-btn {
+    width: 100%;
+    margin-top: 15px;
+    padding: 15px;
+    background: #e94560;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.capture-btn:hover:not(:disabled) {
+    background: #ff6b6b;
+    transform: scale(1.02);
+}
+
+.capture-btn:disabled {
+    background: #444;
+    cursor: not-allowed;
+}
+
+/* Result Section */
+.result-container {
+    min-height: 150px;
+}
+
+.placeholder {
+    text-align: center;
+    color: #666;
+    padding: 40px;
+}
+
+.result-content {
+    text-align: center;
+}
+
+.plate-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2ed573;
+    padding: 20px;
+    background: #0f3460;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    letter-spacing: 3px;
+}
+
+.plate-number.error {
+    color: #ff4757;
+    font-size: 1.2rem;
+}
+
+.confidence {
+    color: #a0a0a0;
+    margin-bottom: 15px;
+}
+
+.all-texts {
+    font-size: 0.85rem;
+    color: #666;
+    padding: 10px;
+    background: #0f3460;
+    border-radius: 5px;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #0f3460;
+    border-top-color: #e94560;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .plate-number {
+        font-size: 1.8rem;
+    }
+}

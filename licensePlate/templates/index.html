@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Plate Recognition</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>License Plate Recognition</h1>
+            <p>IP Webcam을 사용한 자동차 번호판 인식</p>
+        </header>
+
+        <!-- Camera Setup -->
+        <section class="camera-setup">
+            <h2>Camera Setup</h2>
+            <div class="input-group">
+                <input type="text" id="camera-ip" placeholder="IP Webcam IP (예: 192.168.0.10)">
+                <button id="connect-btn" onclick="connectCamera()">Connect</button>
+            </div>
+            <div id="connection-status" class="status"></div>
+        </section>
+
+        <!-- Video Stream -->
+        <section class="video-section">
+            <h2>Live Stream</h2>
+            <div class="video-container">
+                <img id="video-stream" src="" alt="Camera stream will appear here">
+                <div id="no-video" class="no-video">
+                    <p>카메라가 연결되지 않았습니다</p>
+                    <p>IP Webcam 앱을 실행하고 IP를 입력하세요</p>
+                </div>
+            </div>
+            <button id="capture-btn" class="capture-btn" onclick="captureAndRecognize()" disabled>
+                Capture & Recognize
+            </button>
+        </section>
+
+        <!-- Recognition Result -->
+        <section class="result-section">
+            <h2>Recognition Result</h2>
+            <div id="result-container" class="result-container">
+                <div id="result-placeholder" class="placeholder">
+                    캡처 버튼을 클릭하면 번호판 인식 결과가 여기에 표시됩니다
+                </div>
+                <div id="result-content" class="result-content" style="display: none;">
+                    <div class="plate-number" id="plate-number"></div>
+                    <div class="confidence" id="confidence"></div>
+                    <div class="all-texts" id="all-texts"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay" style="display: none;">
+            <div class="spinner"></div>
+            <p>번호판 인식 중...</p>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
